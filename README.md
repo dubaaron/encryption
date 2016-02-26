@@ -1,21 +1,22 @@
+# Encrypting files in B2
+
 Backblaze’s backup product has been encrypting customer data by default from the day it shipped in 2008. The files are encrypted on the user’s computer, transferred to Backblaze via an encrypted SSL connection and stored in the encrypted format. In fact, there is no way to turn it off. Flash forward to 2015, we’ve now encrypted billions of files and decrypted millions of files. The way encryption works in the online backup product is described on the [Backblaze blog](https://www.backblaze.com/blog/how-to-make-strong-encryption-easy-to-use/).
 
 For B2, encryption had to be optional. Some use cases would require encryption, some would not.
 
 This article describes how to encrypt files pushed to B2, using the same technique the backup product uses. 
 
-**Pre-requisities**
+**Prerequisities**
 - OpenSSL command line tool.
 This tool is installed on Mac and generally on Linux hosts by default. It needs be be downloaded and installed for Windows.
 
 - B2 CLI tool 
 This can be found on [Github](https://github.com/Backblaze/B2_Command_Line_Tool) or can be installed via PIP “pip install b2”. After installation, you need to run the authorize_account step to provide your B2 credentials
 
-	$ b2 authorize_account [accountId] [applicationKey]
-	
-	
 
-# **Steps**
+     $ b2 authorize_account [accountId] [applicationKey]
+
+# Steps
 
 ## Create a private/public keypair. 
 
