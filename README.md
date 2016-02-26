@@ -13,8 +13,10 @@ This can be found on [Github][https://github.com/Backblaze/B2_Command_Line_Tool]
 
 	$ b2 authorize_account [accountId] [applicationKey]
 
-**Steps**
-1. Create a private/public keypair. 
+# **Steps**
+
+## Create a private/public keypair. 
+
 You only need to do this step once. (Alternatively - if you already have a public/private key pair, you can omit this.)
 
 	PRIVATE_KEY="priv-key.pem"
@@ -35,7 +37,8 @@ The private key (priv-key.pem) and the passphrase you set should be saved in a s
 
 As you'll see below, the private key is only needed for decrypting files. For added security, do not keep this file on the computer you use for encrypting data.
 
-2. Encrypt and transmit file to B2.
+## Encrypt and transmit file to B2.
+
 You need to run this step for each file you wish to encrypt. This step generates a 180 character one-time per file password and uses this to encrypt the file. Then, this one-time password is itself encrypted, using the public key and stored to disk.
 
 Finally, both the encrypted file and the encrypted one-time password is transmitted to B2.
@@ -71,7 +74,8 @@ Finally, both the encrypted file and the encrypted one-time password is transmit
 	b2 upload_file $B2_BUCKET_NAME $FILE_TO_ENCRYPT.key.enc \
 		$FILE_TO_ENCRYPT.key.enc
 
-3. Download and decrypt from B2.
+## Download and decrypt from B2.
+
 You need to run this step for every file you want to retreive from B2 and decrypt. This step fetches the encrypted file and one-time passsword from B2. The one-time password is decrypted using your private key. Then, this password is used to decrypt the file.
 
 	PRIVATE_KEY="priv-key.pem"
@@ -105,14 +109,16 @@ You need to run this step for every file you want to retreive from B2 and decryp
 		openssl enc -aes-256-cbc -d -a -pass stdin -in \
 		$FILE_TO_DECRYPT.enc -out $FILE_TO_DECRYPT 
 
-**FAQ**
+# **FAQ**
 
-1. What happens if my private key is comprimised? Do I need to re-encrypt my files?
+## What happens if my private key is comprimised? Do I need to re-encrypt my files?
+
 No. Because your files are encrypted with the one-time password. 
 
 If your private key has been compromised, you need to follow these steps, (1) Generate a new public/private key pair, (2) download all the encrypted one-time password files from B2. (3) decrypt these one-time password files using the comprimised private key, (4) re-encrypt the one-time password files with new public key, and (5) re-upload the newly encrypted on-time password files to B2.
 
 A one-time password file is only 345 bytes, so this operation can be done rapidly.
 
-2. If I change the passphrase on my private key, do I need to re-encrypt all my files?
+## If I change the passphrase on my private key, do I need to re-encrypt all my files?
+
 No. You can change the private key passphrase without changing anything on the B2 side. The private key passphrase is required when you use the private key to generate a public key or decrypt files.
