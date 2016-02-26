@@ -3,7 +3,7 @@
 PRIVATE_KEY="priv-key.pem"
 PUBLIC_KEY="pub-key.pem"
 
-# Generates a AES-256 RSA private key. The passphrase for the private key is
+# Generates a private key. The passphrase for the private key is
 # required to be typed in during key creation.
 
 openssl genrsa -aes256 -out $PRIVATE_KEY 2048

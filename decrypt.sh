@@ -11,9 +11,9 @@ fi
 
 # Download the encrypted file and encrypted one time password from B2.
 
-b2.py download_file_by_name $BUCKET_NAME $FILE_TO_DECRYPT.enc \
+b2 download_file_by_name $BUCKET_NAME $FILE_TO_DECRYPT.enc \
 	$FILE_TO_DECRYPT.enc
-b2.py download_file_by_name $BUCKET_NAME $FILE_TO_DECRYPT.key.enc \
+b2 download_file_by_name $BUCKET_NAME $FILE_TO_DECRYPT.key.enc \
 	$FILE_TO_DECRYPT.key.enc
 
 # Then, decrypt the file. The command is excuted as one command to ensure that 
@@ -27,7 +27,7 @@ b2.py download_file_by_name $BUCKET_NAME $FILE_TO_DECRYPT.key.enc \
 
 # openssl enc -aes-256-cbc -d -a -pass stdin -in $FILE_TO_DECRYPT.enc -out
 # $FILE_TO_DECRYPT 
-# This command decrypts the file using the one-time password and saves to to
+# This command decrypts the file using the one-time password and saves to
 # the filesystem.
 
 openssl rsautl -decrypt -inkey $PRIVATE_KEY -in $FILE_TO_DECRYPT.key.enc | \

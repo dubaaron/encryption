@@ -16,7 +16,7 @@ fi
 
 ONE_TIME_PASSWORD=`openssl rand -base64 180`
 
-# Now, encrypt the file. The file is encrypted using AES-256 symmetrical 
+# Now, encrypt the file. The file is encrypted using symmetrical 
 # encryption along with the 180 character one-time password above. 
 
 echo $ONE_TIME_PASSWORD | \
