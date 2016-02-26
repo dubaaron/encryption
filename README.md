@@ -9,7 +9,7 @@ This article describes how to encrypt files pushed to B2, using the same techniq
 This tool is installed on Mac and generally on Linux hosts by default. It needs be be downloaded and installed for Windows.
 
 - B2 CLI tool 
-This can be found on `Github <https://github.com/Backblaze/B2_Command_Line_Tool>` or can be installed via PIP “pip install b2”. After installation, you need to run the authorize_account step to provide your B2 credentials
+This can be found on [Github][https://github.com/Backblaze/B2_Command_Line_Tool] or can be installed via PIP “pip install b2”. After installation, you need to run the authorize_account step to provide your B2 credentials
 
 	$ b2 authorize_account [accountId] [applicationKey]
 
