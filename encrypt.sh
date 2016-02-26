@@ -25,15 +25,14 @@ echo $ONE_TIME_PASSWORD | \
 
 # Now, encrypt the 180 character one-time password using your public key. This
 # password was computed in RAM and only written to disk encrypted for security.
-# Password is encrypted into a binary format. Base64 encode this to make it
-# easier to move around.
+# Password is encrypted into a binary format. 
 
 echo $ONE_TIME_PASSWORD | \
-	openssl rsautl -encrypt -pubin -inkey $PUBLIC_KEY | \
-	base64 > $FILE_TO_ENCRYPT.key.base64.enc
+	openssl rsautl -encrypt -pubin -inkey $PUBLIC_KEY \
+	-out $FILE_TO_ENCRYPT.key.enc
 
 # Upload the encrypted file and the encrypted one time password to B2. 
 
 b2 upload_file $B2_BUCKET_NAME $FILE_TO_ENCRYPT.enc $FILE_TO_ENCRYPT.enc
-b2 upload_file $B2_BUCKET_NAME $FILE_TO_ENCRYPT.key.base64.enc \
-	$FILE_TO_ENCRYPT.key.base64.enc
+b2 upload_file $B2_BUCKET_NAME $FILE_TO_ENCRYPT.key.enc \
+	$FILE_TO_ENCRYPT.key.enc
