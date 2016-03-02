@@ -1,10 +1,8 @@
 # Encrypting files in B2
 
-Backblaze’s backup product has been encrypting customer data by default from the day it shipped in 2008. The files are encrypted on the user’s computer, transferred to Backblaze via an encrypted SSL connection and stored in the encrypted format. In fact, there is no way to turn it off. Flash forward to 2015, we’ve now encrypted billions of files and decrypted millions of files. The way encryption works in the online backup product is described on the [Backblaze blog](https://www.backblaze.com/blog/how-to-make-strong-encryption-easy-to-use/).
+Backblaze’s backup product has been encrypting customer data by default from the day it shipped in 2008. The files are encrypted on the user’s computer, transferred to Backblaze via an encrypted SSL connection and stored in the encrypted format. In fact, there is no way to turn it off. Flash forward to 2016, we’ve now encrypted billions of files and decrypted millions of files. The way encryption works in the online backup product is described on the [Backblaze blog](https://www.backblaze.com/blog/how-to-make-strong-encryption-easy-to-use/).
 
-For B2, encryption had to be optional. Some use cases would require encryption, some would not.
-
-This article describes how to encrypt files pushed to B2, using the same technique the backup product uses. 
+For B2, encryption had to be optional. Some use cases would require encryption, some would not. This article describes one way to encrypt files and push them to B2, using the a similar technique to how the Backblaze online backup product works today.
 
 **Prerequisities**
 - OpenSSL command line tool.
@@ -112,6 +110,16 @@ You need to run this step for every file you want to retreive from B2 and decryp
 		openssl enc -aes-256-cbc -d -a -pass stdin -in \
 		$FILE_TO_DECRYPT.enc -out $FILE_TO_DECRYPT 
 
+# Notes and Limitations
+
+Some additional notes and limitations to this encryption approach:
+
+- The filenames are not encrypted. The filename of the file on disk, is the filename that's stored in B2.
+- The encrypted file and the encrypted one-time password are stored as separately files in B2 and are being uploaded separately. Therefore, you need to ensure that both files are uploaded to B2 successfully. If only the encrypted content is uploaded, but not the encrypted one-time password, the file can't later be decrypted.
+- The private key and that private key's passphrase that's being used to decrypt the one-time passwords need to be secured well and backed up. Without this private key - the files cannot be decrypted. 
+- This implementation does not upload the public or private key to B2.
+- Finally, there are many different methods to encrypt files and transmit them to B2. Backblaze doesn't guarantee that using this method will interoperate with encryption/decryption features that may be built into B2 in the future.
+
 # **FAQ**
 
 ## What happens if my private key is comprimised? Do I need to re-encrypt my files?
@@ -125,10 +133,4 @@ A one-time password file is only 345 bytes, so this operation can be done rapidl
 ## If I change the passphrase on my private key, do I need to re-encrypt all my files?
 
 No. You can change the private key passphrase without changing anything on the B2 side. The private key passphrase is required when you use the private key to generate a public key or decrypt files.
-
-## But, my filename isn't encrypted. What about that?
-
-Yes, that is correct. In this simple example, the filename is not encrypted. Finding a way to encrypt your filename is left as an exercise for the reader.
-
-
 
