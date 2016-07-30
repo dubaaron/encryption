@@ -122,11 +122,11 @@ Some additional notes and limitations to this encryption approach:
 
 # **FAQ**
 
-## What happens if my private key is comprimised? Do I need to re-encrypt my files?
+## What happens if my private key is compromised? Do I need to re-encrypt my files?
 
 No. Because your files are encrypted with the one-time password. 
 
-If your private key has been compromised, you need to follow these steps, (1) Generate a new public/private key pair, (2) download all the encrypted one-time password files from B2. (3) decrypt these one-time password files using the comprimised private key, (4) re-encrypt the one-time password files with new public key, and (5) re-upload the newly encrypted one-time password files to B2.
+If your private key has been compromised, you need to follow these steps, (1) Generate a new public/private key pair, (2) download all the encrypted one-time password files from B2. (3) decrypt these one-time password files using the compromised private key, (4) re-encrypt the one-time password files with new public key, and (5) re-upload the newly encrypted one-time password files to B2.
 
 A one-time password file is only 345 bytes, so this operation can be done rapidly.
 
